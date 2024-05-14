@@ -53,6 +53,7 @@ container.addEventListener('click', (event) => {
 })
 
 
+
 /* 
 In this example, the event listener is on the parent ul element.
 It checks that the target was an li in the list...
@@ -70,6 +71,6 @@ ul.addEventListener('click', (event) => {
     const numberOfLiClicked = Number(event.target.innerText);
     const li = document.createElement('li');
     li.innerText = numberOfLiClicked + 1
-    event.target.append(li);
+    event.currentTarget.append(li);
   }
 });

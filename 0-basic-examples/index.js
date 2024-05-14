@@ -1,4 +1,5 @@
 // a generic event handler
+const printHi = () => console.log('hi');
 const eventHandler = (event) => console.log(event);
 
 // register an event listener on a button
