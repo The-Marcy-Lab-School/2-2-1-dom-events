@@ -133,6 +133,7 @@ To prevent events from bubbling up, use `event.stopPropagation()`
 const testPropagation = (event) => {
   console.log(`Event detected on #${event.target.id}`);
   console.log(`Event handled by: #${event.currentTarget.id}`);
+  // event.stopPropagation()
 }
 
 document.querySelector('#outer').addEventListener('click', testPropagation);
