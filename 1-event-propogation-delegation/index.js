@@ -13,13 +13,13 @@ Two values to be aware of:
 To prevent events from bubbling up, use `event.stopPropagation()`
 */
 const testPropagation = (event) => {
-  console.log(`Event detected on #${event.target.id} (event.target)`);
-  console.log(`Event handled by: #${event.currentTarget.id} (event.currentTarget)`);
+  console.log(`Event triggered by: #${event.target.id} (event.target)`);
+  console.log(`Handled by: #${event.currentTarget.id} (event.currentTarget)`);
 }
 
 document.querySelector('#outer').addEventListener('click', testPropagation);
-document.querySelector('#middle').addEventListener('click', testPropagation);
-document.querySelector('#inner').addEventListener('click', testPropagation);
+// document.querySelector('#middle').addEventListener('click', testPropagation);
+// document.querySelector('#inner').addEventListener('click', testPropagation);
 
 
 //////////////////////
@@ -34,43 +34,19 @@ in the DOM than the element on which the event originated
 This means we can have a single event handler attached to
 the parent and decide what to do based on the event.target
 */
-const container = document.querySelector('#delegation-container');
-
-// here we are using an inline arrow function for our event handler
-container.addEventListener('click', (event) => {
-
-  console.log('event detected on: ', event.target);
+const ul = document.querySelector('#picture-list');
+const toggleBorder = (event) => {
+  console.log(event.type + ' event detected on: ', event.target);
   console.log('event handled by: ', event.currentTarget);
 
-  const display = document.querySelector('#delegation-display');
-  if (event.target.matches('.arrow') === true) {
-    display.innerText = `Button Pressed: ${event.target.innerText}`;
-  }
+  // Element.matches returns true if the given element would be selected by the given CSS selector
+  // If the target of the event wasn't an image, we don't care about it
+  if (!event.target.matches('img')) return;
 
-  if (event.target.classList.contains('main')) {
-    display.innerText = 'ooh the middle button was pressed!!!';
-  }
-})
+  // toggle the highlight class (which will make the border red)
+  event.target.closest('li').classList.toggle('highlight');
 
-
-
-/* 
-In this example, the event listener is on the parent ul element.
-It checks that the target was an li in the list...
-If it was, it get the number shown by that li...
-And creates a new li with that number + 1...
-And appends it to the currentTarget (the ul)
-*/
-const ul = document.querySelector('#counting-list');
-ul.addEventListener('click', (event) => {
-
-  console.log('event detected on: ', event.target);
-  console.log('event handled by: ', event.currentTarget);
-
-  if (event.target.matches('li')) {
-    const numberOfLiClicked = Number(event.target.innerText);
-    const li = document.createElement('li');
-    li.innerText = numberOfLiClicked + 1
-    event.currentTarget.append(li);
-  }
-});
+  event.stopPropagation()
+}
+ul.addEventListener('mouseover', toggleBorder);
+ul.addEventListener('mouseout', toggleBorder);

@@ -1,12 +1,14 @@
-// a generic event handler
-const printHi = () => console.log('hi');
-const eventHandler = (event) => console.log(event);
+// Select the "target" of the event
+const button = document.querySelector('button');
 
-// register an event listener on a button
-const button = document.querySelector('button')
-const mouseArea = document.querySelector('#mouse-area');
+// Create an event handler callback, it will be invoked with the event object
+const handleEvent = (event) => {
+  console.log(`an event of type "${event.type}" occurred!`);
+}
+// Register an event listener on the button
+button.addEventListener('click', handleEvent);
+button.addEventListener('mouseover', handleEvent);
 
 // TODO:
-// add a 'click' handler for the button
 // add a 'mousemove' handler for the mouseArea
 // add a 'keydown' handler for the entire document
