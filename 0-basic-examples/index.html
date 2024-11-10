@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <style>
+      button {
+        border-radius: 5px;
+        padding: 0.5rem 1rem;
+      }
+
       #mouse-area {
         width: 200px;
         height: 200px;
@@ -18,9 +23,9 @@
     <main>
       <h1>Basic Examples</h1>
       <p>Open the console and press a key anytime</p>
-      <div id="mouse-area">Mouse Over Area</div>
-      <button>Click Me</button>
+      <button id="click-me">Click Me</button>
       <button onclick="console.log('hello world');">I have an inline handler!</button>
+      <div id="mouse-area">Mouse Over Area</div>
     </main>
 
     <!-- Scripts -->

@@ -1,70 +1,49 @@
-////////////////////////
-// Global Data Values //
-////////////////////////
-
-const player = document.querySelector("#player");
-const playerPosition = {
-  x: 0,
-  y: 0,
-  rotation: 0,
-}
+const STEP_DISTANCE = 20;
 
 //////////////////////////
 // DOM Helper Functions //
 //////////////////////////
 
-const movePlayer = (x, y) => {
-  playerPosition.x = x;
-  playerPosition.y = y;
-  player.style.left = `${x}px`;
-  player.style.top = `${y}px`;
+const moveTurtle = (turtle, x, y) => {
+  turtle.x = x;
+  turtle.y = y;
+  turtle.element.style.left = `${x}px`;
+  turtle.element.style.top = `${y}px`;
 };
 
-const rotateTurtle = () => {
-  playerPosition.rotation += 90;
-  player.style.transform = `rotate(${playerPosition.rotation}deg)`;
+const rotateTurtle = (turtle, angle) => {
+  turtle.rotation = angle;
+  turtle.element.style.transform = `rotate(${turtle.rotation}deg)`;
 }
-
-////////////////////
-// Event Handlers //
-////////////////////
-
-/* 
-every event has an event.target property that holds the Element
-that the event was fired on
-*/
-const handlePlayerClick = (event) => {
-  // console.log(event);
-  rotateTurtle();
-};
-
-/* 
-mousemove events have event.x and event.y properties for the 
-position of the mouse on the screen when the event fires
-*/
-const handleMouseMove = (event) => {
-  // console.log(event);
-  const xOffset = 35; // to help position the turtle in the middle of the mouse
-  const yOffset = 25; // to help position the turtle in the middle of the mouse
-  movePlayer(event.x - xOffset, event.y - yOffset);
-};
 
 /* 
 keydown (and other keyboard) events have an event.key property
 which is a string representing the key that was pressed.
 */
-const handleKeyDown = (event) => {
+const handleKeyDown = (event, turtle) => {
   // console.log(event);
-  let x = playerPosition.x;
-  let y = playerPosition.y;
+  let { x, y } = turtle;
+  let rotation;
 
-  if (event.key === 'ArrowLeft') x -= 15;
-  if (event.key === 'ArrowUp') y -= 15;
-  if (event.key === 'ArrowRight') x += 15;
-  if (event.key === 'ArrowDown') y += 15;
-  if (event.key === ' ') rotateTurtle();
+  if (event.key === 'ArrowLeft') {
+    x -= STEP_DISTANCE;
+    rotation = 180;
+  }
+  if (event.key === 'ArrowUp') {
+    y -= STEP_DISTANCE;
+    rotation = 270;
+  }
+  if (event.key === 'ArrowRight') {
+    x += STEP_DISTANCE;
+    rotation = 0;
+  }
+  if (event.key === 'ArrowDown') {
+    y += STEP_DISTANCE;
+    rotation = 90;
+  }
 
-  movePlayer(x, y);
+  rotateTurtle(turtle, rotation);
+  moveTurtle(turtle, x, y);
 };
 
 /////////////////
@@ -72,9 +51,19 @@ const handleKeyDown = (event) => {
 /////////////////
 
 const main = () => {
-  player.addEventListener('click', handlePlayerClick)
-  document.querySelector('main').addEventListener('mousemove', handleMouseMove);
-  document.body.addEventListener('keydown', handleKeyDown);
+  const turtle = {
+    element: document.querySelector("#turtle"),
+    x: 0,
+    y: 0,
+    rotation: 0,
+  }
+
+  // initialize the turtles position
+  moveTurtle(turtle, document.body.clientWidth / 2, document.body.clientHeight / 2);
+
+  // To pass additional values to our event handler, we can make an inline arrow 
+  // function that passes along the event and additional arguments to our handler.
+  document.body.addEventListener('keydown', (e) => handleKeyDown(e, turtle));
 }
 
 main();

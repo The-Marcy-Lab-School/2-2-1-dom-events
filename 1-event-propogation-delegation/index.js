@@ -17,9 +17,9 @@ const testPropagation = (event) => {
   console.log(`Handled by: #${event.currentTarget.id} (event.currentTarget)`);
 }
 
-document.querySelector('#outer').addEventListener('click', testPropagation);
+document.querySelector('#inner').addEventListener('click', testPropagation);
 // document.querySelector('#middle').addEventListener('click', testPropagation);
-// document.querySelector('#inner').addEventListener('click', testPropagation);
+// document.querySelector('#outer').addEventListener('click', testPropagation);
 
 
 //////////////////////
