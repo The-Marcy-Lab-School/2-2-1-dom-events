@@ -18,9 +18,7 @@ button.addEventListener('click', handleEvent);
 
 
 
-// TODO:
-// 1. add a 'mousemove' listener for the mouseArea to invoke changeToRandomColor
-// 2. add a 'keydown' listener for the entire document to invoke changeToRandomColor
+
 
 const changeToRandomColor = (event) => {
   // Generate a random color string
@@ -35,3 +33,15 @@ const changeToRandomColor = (event) => {
 
 document.querySelector("#mouse-area").addEventListener('mousemove', changeToRandomColor)
 document.body.addEventListener('keydown', changeToRandomColor)
+
+
+// TODO:
+// 1. add a 'mousemove' listener for the mouseArea to invoke handleEvent
+// 2. add a 'keydown' listener for the entire document to invoke handleEvent
+// 3. add a 'mouseenter' listener for the button to invoke changeToPrimaryColor
+
+const changeToPrimaryColor = (event) => {
+  const colors = ['red', 'blue', 'yellow', 'green']
+  const randomIndexInColors = Math.floor(Math.random() * colors.length);
+  event.target.style.backgroundColor = colors[randomIndexInColors];
+};

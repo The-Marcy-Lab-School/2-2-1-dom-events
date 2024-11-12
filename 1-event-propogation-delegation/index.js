@@ -15,11 +15,13 @@ To prevent events from bubbling up, use `event.stopPropagation()`
 const testPropagation = (event) => {
   console.log(`Event triggered by: #${event.target.id} (event.target)`);
   console.log(`Handled by: #${event.currentTarget.id} (event.currentTarget)`);
+
+  // event.stopPropagation()
 }
 
 document.querySelector('#inner').addEventListener('click', testPropagation);
-// document.querySelector('#middle').addEventListener('click', testPropagation);
-// document.querySelector('#outer').addEventListener('click', testPropagation);
+document.querySelector('#middle').addEventListener('click', testPropagation);
+document.querySelector('#outer').addEventListener('click', testPropagation);
 
 
 //////////////////////
@@ -45,8 +47,7 @@ const toggleBorder = (event) => {
 
   // toggle the highlight class (which will make the border red)
   event.target.closest('li').classList.toggle('highlight');
-
-  event.stopPropagation()
 }
+
 ul.addEventListener('mouseover', toggleBorder);
 ul.addEventListener('mouseout', toggleBorder);
